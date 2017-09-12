@@ -1,39 +1,33 @@
 ###############################################################################
-# Part 0
-###############################################################################
-
-# Set the working directory to be the "ice" subfolder containing this
-# file. Remember: please do not save the setwd(...) command in a script.
-
-###############################################################################
 # Part 1
 ###############################################################################
 
-# Use RStudio's graphical interface to import allstate.csv. You can also
-# read about the data in the included PDF file allstate_description.pdf.
-
-# As an alternative method, now use read.csv(...) to import the data
-# directly from the R console. Save the data frame in a variable called
-# df.
+# Load the libraries dplyr and reshape2. If they are not already
+# installed, install them first.
 
 
 
-# Use the View(df) from the console to get a spreadsheet-like view of the
-# data frame.
-
-# Examine the structure of df using str(...).
-
-
-
-# Examine the column names of df. Also look at the number of columns.
+# Use read.csv(...) to import the data set mortDefault_sample.csv into
+# a data frame df. Make the columns yearsEmploy, year, and default
+# factors. Note that "default" is the name of a column, which refers to
+# whether a customer defaulted on their mortgage.
 
 
 
-# Examine the number of rows of df.
+# Use the group_by(...) command to group df by yearsEmploy and default.
+# Overwrite df with the results.
 
 
 
-# Calculate the total memory used by df in megabytes.
+# Use the summarize(...) command to count the number of records in the
+# groups of df. Save the results in a new data frame called summ with a
+# column called count.
+
+
+
+# Use the dcast(...) command to create a summary table based on summ
+# with yearsEmploy as the rows and default as the columns. Overwrite
+# summ with the results, and then print summ.
 
 
 
@@ -41,92 +35,71 @@
 # Part 2
 ###############################################################################
 
-# Examine the seventh entry of the third column of df.
+# Load the library ggplot2. If it is not already installed, install it
+# first. All plots in these exercises should be made with the qplot(...)
+# function of ggplot2.
 
 
 
-# Use the : symbol to select rows 7 to 11 and columns 3 to 5.
+# Plot a histogram of the variable creditScore with bin width 20.
 
 
 
-# Now use the c(...) command to select rows 7 and 11 (not "7 to 11") and
-# columns state and cost.
+# Make a density plot of ccDebt.
 
 
 
-###############################################################################
-# Part 3
-###############################################################################
-
-# Reread the data into df using the following definition of colClasses:
-
-colClasses <- c("character", "character", "factor", "factor",
-    "character", "factor", "character", "integer", "factor", "integer",
-    "factor", "factor", "integer", "integer", "factor", "factor",
-    "integer", "factor", "factor", "factor", "factor", "factor",
-    "factor", "factor", "integer")
+# Make a bar chart of year.
 
 
 
-# Rexamine the structure of df and note the changes compared to before.
+# Make a scatter plot of ccDebt on creditScore. The term ``on''
+# indicates that ccDebt should be the y variable.
 
 
 
-# Examine the levels of the factor related to car value.
+# Make a heatmap of ccDebt and creditScore.
 
 
 
-# Reread the data, this time also allowing both "NA" and "" (the empty
-# string) to be read as NA values.
+# Make a contour density plot of ccDebt and creditScore.
 
 
 
-# Examine again the levels of the factor related to car value.
+# Plot a density plot of creditScore with facets by year.
 
 
 
-###############################################################################
-# Part 4
-###############################################################################
-
-# Prepare a summary of the state column using the
-# summary(...) command.
+# Plot a density plot of ccDebt with fill by default. Also set the
+# transparency to 40%.
 
 
 
-# Prepare a histogram of the cost column. See ?hist for help.
+# Plot boxplots of ccDebt on yearsEmploy.
 
 
 
-# Use plot(...) to plot cost on state.
+# Graph violin plots of ccDebt on year.
 
 
 
-###############################################################################
-# Part 5
-###############################################################################
-
-# Count the number of NAs in the duration_previous column using
-# is.na(...).
+# Make a bar chart of year with fill by default.
 
 
 
-# Count the total number of entries in df that are NAs .
+# Make a heatmap of year and default.
 
 
 
-# Now, calculate the pecentage of entries in df that are NAs .
+# Make a jitter plot of ccDebt on yearsEmploy with color by default.
 
 
 
-###############################################################################
-# Part 6
-###############################################################################
-
-# If times allows, read the SPSS file spss.sav into a data frame using
-# the function read.spss in the package foreign.
+# Repeat the previous exercise with facets by default. Be sure to keep
+# the color by the variable default as well.
 
 
 
-# Save your script and close RStudio. (You do not need to upload your
-# script.)
+# Repeat the previous, but this time add a facet by year.
+
+
