@@ -1,0 +1,75 @@
+---
+title: "ICE"
+author: "Sam Burer"
+date: "September 20, 2017"
+output: html_document
+---
+
+```{r echo = FALSE}
+url <- "https://data.cityofchicago.org/api/views/kn9c-c2s2/rows.csv"
+download.file(url, "data.csv")
+indicators <- read.csv("data.csv", stringsAsFactors = FALSE)
+```
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+library(rvest)
+url <- "https://en.wikipedia.org/wiki/Neighborhoods_in_Chicago"
+pg <- read_html(url)
+tb <- html_table(pg, fill = TRUE)
+neighborhoods <- tb[[1]]
+```
+
+```{r echo = FALSE, warning = FALSE}
+library(ggplot2)
+library(scales)
+p <- qplot(PERCENT.AGED.UNDER.18.OR.OVER.64,
+           PER.CAPITA.INCOME,
+           data = indicators, geom = "point", color = I("blue"))
+p <- p + scale_y_continuous(
+  name = "Per Capita Income",
+  labels = dollar)
+p <- p + scale_x_continuous(
+  name = "Percent Aged Under 18 or Over 64")
+```
+
+```{r echo = FALSE}
+neighborhoods$"Community area" <- as.factor(neighborhoods$"Community area")
+df <- as.data.frame(table(neighborhoods$"Community area"))
+df <- df[order(df$Freq, decreasing = TRUE), ]
+names(df) <- c("Community Area", "Number of Neighborhoods")
+```
+
+```{r echo = FALSE}
+library(scales)
+medpci <- dollar(round(median(indicators$PER.CAPITA.INCOME), 0))
+
+tmp <- max(indicators$PER.CAPITA.INCOME)
+tmp <- indicators$PER.CAPITA.INCOME == tmp
+maxpci <- indicators$COMMUNITY.AREA.NAME[tmp]
+
+tmp <- min(indicators$PER.CAPITA.INCOME)
+tmp <- indicators$PER.CAPITA.INCOME == tmp
+minpci <- indicators$COMMUNITY.AREA.NAME[tmp]
+```
+
+
+The City of Chicago has `r nrow(neighborhoods)` neighborhoods, which are organized
+into `r nrow(indicators)` community areas. With respect to the community
+areas, the median per capita income is `r medpci`. The community area with
+the highest per capita income is `r maxpci`, while the community with
+the lowest is `r minpci`.
+
+The following table presents the ten largest community areas in terms
+of number of neighborhoods:
+
+```{r echo = FALSE, comment = NULL}
+print(head(df, n = 10), row.names = FALSE)
+```
+
+The following plot presents the relationship between *Per Capita Income*
+and *Percent Aged Under 18 or Over 64* in the community areas
+of Chicago:
+
+```{r echo = FALSE, comment = NULL}
+p
+```
